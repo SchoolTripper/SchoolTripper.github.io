@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Tripper</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        body {
+            background: #2E8C86;
+            background: linear-gradient(180deg,#2e8c86 0%, #2e8c86 15%, #dde8e8 100%);
+            padding: 0;
+            margin: 0;
+            height: 345vh;
+            overflow-x: hidden;
+        }
+
+        ::-webkit-scrollbar {
+            width: 12px;
+            height: 12px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #5aa7a2;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background-color: #23827e;
+            border-radius: 0;
+            border: 2px solid #5aa7a2;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background-color: #175b59;
+        }
+
+        ::-webkit-scrollbar-button {
+            background-color: #083944;
+            height: 12px;
+            width: 12px;
+        }
+
+        ::-webkit-scrollbar-corner {
+            background: #cfe3e4;
+        }
+
+        * {
+            scrollbar-color: #23827e #5aa7a2;
+        }
+
+        .text {
+            color: #011627;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+        }
+
+        #top-bar {
+            width: 100%;
+            height: 5vh;
+            position: fixed;
+            background-color: #134857;
+            z-index: 2;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #background {
+            width: 150%;
+            height: 44.398vh;
+            background-image: url(https://SchoolTripper.github.io/BG.png);
+            background-position: left;
+            background-size: 269.529vh 44.398vh;
+            background-repeat: repeat-x;
+            user-select: none;
+        }
+
+        #monitor {
+            width: 93.194vh;
+            height: 73.298vh;
+            position: absolute;
+            left: 0;
+            top: 16.545vh;
+            user-select: none;
+        }
+
+        #monitor2 {
+            width: 93.194vh;
+            height: 73.298vh;
+            position: absolute;
+            right: 5vh;
+            top: 100vh;
+            user-select: none;
+        }
+
+        #logo {
+            width: 61.885vh;
+            height: 25.131vh;
+            position: absolute;
+            right: 15.288vh;
+            top: 15.497vh;
+            user-select: none;
+        }
+
+        ::-moz-selection {
+            background: #FCD437;
+            color: #000;
+        }
+
+        ::selection {
+            background: #FCD437;
+            color: #000;
+        }
+
+        #download-button {
+            background-color: #134857;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+            color: #fff;
+            width: 41.885vh;
+            height: 10.471vh;
+            position: absolute;
+            right: 29vh;
+            top: 61vh;
+            border-radius: 4vh;
+            outline: #FCD437 solid 0.5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2rem;
+            user-select: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.05s linear;
+        }
+
+        #blured-button {
+            opacity: 0;
+            height: 100%;
+            width: 100%;
+            filter: blur(0px);
+            background-color: transparent;
+            outline: #FCD437 solid 1vh;
+            position: absolute;
+            border-radius: 4vh;
+            transition: filter 0.3s ease-in;
+        }
+
+        #download-button:hover {
+           transform: scale(1.02);
+        }
+
+        #download-button:hover #blured-button {
+            opacity: 100;
+            filter: blur(10px);
+        }
+
+        .top-bar-text {
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+            color: #fff;
+            font-size: 1.5rem;
+            margin: 0 10vh 0 10vh;
+            cursor: pointer;
+        }
+
+        #download-top {
+            color: #ffffff7a;
+        }
+
+        #main-top {
+            color: #ffffff7a;
+        }
+
+        #documentation-top {
+            color: #fff;
+        }
+
+        #translate-container {
+            height: 100%;
+            position: absolute;
+            right: 2vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #translate-button {
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 4vh;
+            width: 4vh;
+        }
+
+        #translate-options {
+            width: 0;
+            height: 3.5vh;
+            position: relative;
+            display: flex;
+            overflow: hidden;
+            transition: width 0.1s linear;
+        }
+
+        #hungarian-flag {
+            position: relative;
+            height: 100%;
+            margin: 0 0.5vh 0 0.5vh;
+            cursor: pointer;
+        }
+
+        #english-flag {
+            position: relative;
+            height: 100%;
+            margin: 0 0.5vh 0 0.5vh;
+            cursor: pointer;
+        }
+
+        #german-flag {
+            position: relative;
+            height: 100%;
+            margin: 0 0.5vh 0 0.5vh;
+            cursor: pointer;
+        }
+        
+        .hungarian {
+            display: none;
+        }
+
+        .english {
+            display: none;
+        }
+
+        .german {
+            display: none;
+        }
+
+        .active {
+            display: block;
+        }
+
+        #top-desc {
+            width: 80vh;
+            height: 10vh;
+            right: 11vh;
+            position: absolute;
+        }
+
+        #price-text {
+            position: absolute;
+            left: 12vh;
+            top: 121vh;
+            font-size: 3rem;
+            width: 80vh;
+            text-align: left;
+        }
+
+        #price-text2 {
+            color: #FCD437;
+            font-size: 1.7rem;
+            width: 70vh;
+            text-align: left;
+        }
+
+        #video {
+            position: absolute;
+            left: 5vh;
+            top: 194vh;
+            width: 90vh;
+            border-radius: 2vh;
+            outline: #FCD437 solid 0.5vh;
+        }
+
+        #use-text {
+            position: absolute;
+            right: 12vh;
+            top: 203vh;
+            font-size: 3rem;
+            width: 80vh;
+            text-align: right;
+        }
+
+        #use-text2 {
+            color: #FCD437;
+            font-size: 1.7rem;
+            width: 70vh;
+            text-align: right;
+        }
+
+        .manual {
+            position: absolute;
+            right: 12vh;
+            top: 227vh;
+            background-color: #134857;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+            color: #fff;
+            width: 44vh;
+            height: 7vh;
+            border-radius: 4vh;
+            outline: #FCD437 solid 0.5vh;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
+            user-select: none;
+            overflow: hidden;
+            cursor: pointer;
+            display: flex;
+            transition: transform 0.05s linear;
+        }
+
+        .manual:hover {
+            transform: scale(1.02);
+        }
+
+        .manual:hover #blured-button {
+            opacity: 100;
+            filter: blur(10px);
+        }
+
+        #bottom-bar {
+            width: 100%;
+            position: absolute;
+            bottom: -245vh;
+            height: 20vh;
+            background-color: #134857;
+            color: #2e8c86;
+            font-size: 8.5vw;
+            overflow: hidden;
+            user-select: none;
+        }
+
+        #download-button2 {
+            background-color: #134857;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            text-align: center;
+            color: #fff;
+            width: 50vh;
+            height: 15vh;
+            position: absolute;
+            right: 29vh;
+            top: 285vh;
+            border-radius: 4vh;
+            outline: #FCD437 solid 0.5vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 3rem;
+            user-select: none;
+            overflow: hidden;
+            cursor: pointer;
+            transition: transform 0.05s linear;
+        }
+
+        #download-button2:hover #blured-button {
+            opacity: 100;
+            filter: blur(10px);
+        }
+
+        #download-button2:hover {
+            transform: scale(1.02);
+        }
+    </style>
+</head>
+<body>
+    <div id="top-bar">
+        <div class="top-bar-text" id="download-top"><span class="hungarian">Letöltés</span><span class="english">Download</span><span class="german">Herunterladen</span></div>
+        <div class="top-bar-text" id="main-top"><span class="hungarian">Főoldal</span><span class="english">Home</span><span class="german">Startseite</span></div>
+        <div class="top-bar-text" id="documentation-top"><span class="hungarian">Használat</span><span class="english">How to use</span><span class="german">Anleitung</span></div>
+        <div id="translate-container">
+            <div id="translate-options">
+                <img id="hungarian-flag" src="https://SchoolTripper.github.io/hu.png">
+                <img id="english-flag" src="https://SchoolTripper.github.io/en.png">
+                <img id="german-flag" src="https://SchoolTripper.github.io/de.png">
+            </div>
+            <div id="translate-button">
+                <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="#fff">
+                    <path d="m476-80 182-480h84L924-80h-84l-43-122H603L560-80h-84ZM160-200l-56-56 202-202q-35-35-63.5-80T190-640h84q20 39 40 68t48 
+                    58q33-33 68.5-92.5T484-720H40v-80h280v-80h80v80h280v80H564q-21 72-63 148t-83 116l96 98-30 82-122-125-202 201Zm468-72h144l-72-204-72 204Z"/>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="background"></div>
+    <img id="logo" src="https://SchoolTripper.github.io/Logo.png"> 
+    <img id="monitor" src="https://SchoolTripper.github.io/Monitor.png"> 
+    <div id="top-desc" class="text"><div style="font-size: 35px;"><span class="hungarian">Osztálykirándulás</span><span class="english">Class trip</span><span class="german">Klassenfahrt-Planungsprogramm</span></div><div style="font-size: 30px;"><span class="hungarian">tervező program</span><span class="english">planning application.</span></div></div>
+    <img id="monitor2" src="https://SchoolTripper.github.io/Monitor2.png">
+    <div id="download-button"><div id="blured-button"></div><div id="blured-button"></div><span class="hungarian">Letöltés</span><span class="english">Download</span><span class="german">Herunterladen</span></div>
+    <div class="text" id="price-text"><span class="hungarian">Ne szenvedjen a költségek összeszámolásával!</span><span class="english">No more struggle with totaling prices!</span><span class="german">Keine Sorgen bei der Kostenberechnung!</span><div class="text" id="price-text2"><span class="hungarian">A program autómatikusan összesíti és kiszámítja a végső fizetni való összeget.</span><span class="english">The program automatically calculates the final amount to be paid.</span><span class="german">Das Programm summiert automatisch und berechnet den endgültigen zu zahlenden Betrag.</span></div></div>
+    
+    <video id="video" controls src="../actual website/Unus Annus - Brick Soccer.mp4"></video>
+    <div class="text" id="use-text"><span class="hungarian">Használat</span><span class="english">How to use</span><span class="german">Anleitung</span><div style="display: flex; justify-content: right;"><div class="text" id="use-text2"><span class="hungarian">Az alábbi Microsoft Word dokumentumban a videónál részletesebb használati útmutató és a tudnivalók találhatók.</span><span class="english">The Microsoft Word document below contains a more detailed user guide and additional important information.</span><span class="german">Im folgenden Microsoft Word-Dokument finden Sie eine detailliertere Anleitung und wichtige Informationen als im Video.</span></div></div></div>
+    
+    <div class="hungarian">
+        <a class="manual" href="./Logo.png" download><div id="blured-button"></div><div id="blured-button"></div>
+            Használati útmutató.docx
+        </a>
+    </div>
+    <div class="english">
+        <a class="manual" href="./Logo.png" download><div id="blured-button"></div><div id="blured-button"></div>
+            Instruction manual.docx
+        </a>
+    </div>
+    <div class="german">
+        <a class="manual" href="./Logo.png" download><div id="blured-button"></div><div id="blured-button"></div>
+            Benutzerhandbuch.docx
+        </a>
+    </div>
+    
+    <div class="text" id="bottom-bar">Mezei Zoltán Péter</div>
+    <div id="download-button2"><div id="blured-button"></div><div id="blured-button"></div><span class="hungarian">Letöltés Windowshoz</span><span class="english">Download for Windows</span><span class="german">Herunterladen</span></div>
+    
+    <script>
+    const Background = document.getElementById('background');
+    const ScrollButtonTop = document.getElementById('main-top');
+    const ScrollButtonMiddle = document.getElementById('documentation-top');
+    const ScrollButtonBottom = document.getElementById('download-top');
+    const ScrollDownloadButton = document.getElementById('download-button');
+    const TranslateButton = document.getElementById('translate-button');
+    const TranslateOptions = document.getElementById('translate-options');
+    const EnglishButton = document.getElementById('english-flag');
+    const GermanButton = document.getElementById('german-flag');
+    const HungarianButton = document.getElementById('hungarian-flag');
+
+    const EnglishText = document.querySelector('.english');
+    const GermanText = document.querySelector('.german');
+    const HungarianText = document.querySelector('.hungarian');
+
+    ChangeLanguage('hungarian')
+
+    function ChangeLanguage(langClass) {
+      const Hungarian = document.querySelectorAll('.hungarian');
+      const English = document.querySelectorAll('.english');
+      const German = document.querySelectorAll('.german');
+      Hungarian.forEach(el => el.classList.remove('active'));
+      English.forEach(el => el.classList.remove('active'));
+      German.forEach(el => el.classList.remove('active'));
+
+      const selected = document.querySelectorAll(`.${langClass}`);
+      selected.forEach(el => el.classList.add('active'));
+    }
+
+    EnglishButton.addEventListener('click', () => ChangeLanguage('english'));
+    GermanButton.addEventListener('click', () => ChangeLanguage('german'));
+    HungarianButton.addEventListener('click', () => ChangeLanguage('hungarian'));
+
+    window.addEventListener('scroll', () => {
+    const scrollY = window.scrollY;
+        Background.style.transform = `translateX(-${scrollY * 0.3}px)`;
+    });
+
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 600) {
+                ScrollButtonTop.style.color = "#fff"
+      } else {
+        ScrollButtonTop.style.color = ""
+      }
+    });
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 700 && window.scrollY < 1900) {
+            ScrollButtonBottom.style.color = "#fff";
+        } else {
+            ScrollButtonBottom.style.color = "";
+        }
+    });
+
+    ScrollButtonTop.addEventListener('click', () => {
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
+    });
+
+    ScrollButtonMiddle.addEventListener('click', () => {
+      window.scrollTo({
+        top: 820,
+        behavior: 'smooth'
+      });
+    });
+
+    ScrollButtonBottom.addEventListener('click', () => {
+      window.scrollTo({
+        top: 2400,
+        behavior: 'smooth'
+      });
+    });
+
+    ScrollDownloadButton.addEventListener('click', () => {
+      window.scrollTo({
+        top: 2400,
+        behavior: 'smooth'
+      });
+    });
+
+    let isExpanded = false;
+
+    TranslateButton.addEventListener('click', () => {
+        if (isExpanded) {
+        TranslateOptions.style.width = "";
+        } else {
+        TranslateOptions.style.width = "13.5vh";
+        }
+        isExpanded = !isExpanded;
+    });
+    </script>
+</body>
+</html>
