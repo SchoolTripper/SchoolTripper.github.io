@@ -549,6 +549,21 @@
         }
         isExpanded = !isExpanded;
     });
+
+    const video = document.getElementById('video');
+
+    function updateBorderRadius() {
+      if (document.fullscreenElement === video) {
+        video.style.borderRadius = '0';
+      } else {
+        video.style.borderRadius = '2vh';
+      }
+    }
+
+    document.addEventListener('fullscreenchange', updateBorderRadius);
+    document.addEventListener('webkitfullscreenchange', updateBorderRadius);
+    document.addEventListener('mozfullscreenchange', updateBorderRadius);
+    document.addEventListener('MSFullscreenChange', updateBorderRadius);
     </script>
 </body>
 </html>
