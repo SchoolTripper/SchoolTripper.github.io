@@ -1,0 +1,1456 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>School Tripper</title>
+    <script src="./dates.js"></script>
+    <link rel="stylesheet" href="dates.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Special+Gothic+Expanded+One&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
+
+        body {
+            font-family: "Roboto", Arial, sans-serif;
+            background-image: url(./BG.png);
+            background-position: left;
+            background-size: 240vh 100vh;
+            background-repeat: repeat-x;
+            display: flex;
+            justify-content: center;
+            animation: moveLeft 10s linear infinite;
+            overflow: hidden;
+            padding: 0;
+            margin: 0;
+        }
+
+        @keyframes moveLeft {
+        from {
+            background-position: 0 top;
+        }
+        to {
+            background-position: -240vh top;
+        }
+        }
+
+        #bus {
+            width: 40vh;
+            position: absolute;
+            right: 30vh;
+            top: 10.4vh;
+        }
+
+        #logo {
+            width: 80vh;
+            position: absolute;
+            left: 5vh;
+            top: 10vh;
+        }
+
+        #date {
+            opacity: 0;
+            position: absolute;
+            top: -50vh;
+        }
+
+        #left {
+            left: 0px;
+            bottom: 8vh;
+            position: absolute;
+            width: 32vw;
+            height: 63.7vh;
+            padding: 3vh;
+            box-sizing: border-box;
+            display: flex;
+        }
+
+        #middle {
+            background-color: rgba(0, 0, 0, 0.05);
+            width: 36vw;
+            height: 63.7vh;
+            bottom: 8vh;
+            position: absolute;
+            padding: 3vh;
+            box-sizing: border-box;
+        }
+
+        #right {
+            right: 0px;
+            position: absolute;
+            width: 32vw;
+            height: 63.7vh;
+            bottom: 8vh;
+            padding: 3vh;
+            box-sizing: border-box;
+            overflow-x: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            overflow-y: auto;
+            scrollbar-color: rgba(0, 0, 0, 0.116) rgba(0, 0, 0, 0.144);
+        }
+
+        #right::-webkit-scrollbar {
+            display: none;
+        }
+
+        @media (min-width: 1920px) {
+        #right:hover {
+            overflow-y: scroll;
+            -ms-overflow-style: thin;
+            scrollbar-width: thin;
+            }
+        #right::-webkit-scrollbar {
+            display: block;
+        }
+        #right:hover #restaurant-1 {
+            width: calc(100% + 1vh);
+            }
+        #right:hover #restaurant-2 {
+            width: calc(100% + 1vh);
+            }
+        #right:hover #restaurant-3 {
+            width: calc(100% + 1vh);
+            }
+        #right:hover #restaurant-4 {
+            width: calc(100% + 1vh);
+            }
+        #right:hover #restaurant-loader{
+            width: calc(100% + 0.8vh);
+        }
+        }
+    
+        ::placeholder {
+            color: #93ABB2;
+        }
+
+        #country {
+            background-color: #134857;
+            border: none;
+            display: flex;
+            height: 5vh;
+            margin-right: 3vh;
+            width: calc((32vw - 9vh)/3*2);
+            border-radius: 1vh;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.3vw;
+            text-align: center;
+        }
+
+        #country:hover {
+            outline: solid #FCD437 2px;
+        }
+
+        #country:focus {
+            outline: solid #FCD437 2px;
+        }
+
+        #city {
+            right: 3vh;
+            position: absolute;
+            background-color: #134857;
+            border: none;
+            display: flex;
+            height: 5vh;
+            width: calc((32vw - 9vh)/3);
+            border-radius: 1vh;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.3vw;
+            text-align: center;
+        }
+
+        #city:hover {
+            outline: solid #FCD437 2px;
+        }
+
+        #city:focus {
+            outline: solid #FCD437 2px;
+        }
+
+        #kids {
+            right: 3vh;
+            top: 11.8vh;
+            position: absolute;
+            background-color: #134857;
+            border: none;
+            display: flex;
+            height: 5vh;
+            width: calc((32vw - 9vh)/3);
+            border-radius: 1vh;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.1vw;
+            text-align: center;
+        }
+
+        #kids:hover {
+            outline: solid #FCD437 2px;
+        }
+
+        #kids:focus {
+            outline: solid #FCD437 2px;
+        }
+
+        ::-moz-selection {
+            background: #FCD437;
+            color: #000;
+        }
+
+        ::selection {
+            background: #FCD437;
+            color: #000;
+        }
+
+        #final-price {
+            width: 100%;
+            height: 5vh;
+            background-color: #134857;
+            bottom: 3vh;
+            position: absolute;
+            align-items: center;
+            display: flex;
+            padding: 0 0 0 2vh;
+            z-index: 5;
+            cursor: pointer;
+            transition: height 0.3s ease;
+            box-sizing: border-box;
+            box-shadow: 0px -5px 5px #00000010;
+        }
+
+        #price {
+            width: 97%;
+            text-overflow: ellipsis;
+            white-space: nowrap; 
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.3vw;
+            overflow: hidden;
+            display: block;
+        }
+
+        #fullscreen-icon {
+            width: 2vh;
+            height: 2vh;
+            background-color: transparent;
+            border: #fff 0.5vh;
+            border-style: solid none none solid;
+            right: 2vh;
+            position: absolute;
+            transition: transform 0.3s ease;
+            transform-origin: center;
+        }
+
+        .hotel-background {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg,rgba(19, 72, 87, 1) 51%, rgba(0, 0, 0, 0) 70%);
+            padding: 1.7vh 2vh 1.7vh 2vh;
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+        }
+
+        #hotel-1 {
+            width: 100%;
+            height: 17.26vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            margin-bottom: 3vh;
+            display: none;
+        }
+        
+        #hotel-2 {
+            width: 100%;
+            height: 17.26vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            margin-bottom: 3vh;
+            display: none;
+        }
+        
+        #hotel-3 {
+            width: 100%;
+            height: 17.26vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            display: none;
+        }
+        
+        #hotel-1:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        #hotel-2:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        #hotel-3:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        .hotel-name {
+            position: relative;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.3vw;
+            text-align: left;
+            max-width: 70%;
+            margin-bottom: 1vh;
+        }
+
+        .hotel-desc {
+            position: relative;
+            color: #fff;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1vw;
+            max-width: 60%;
+            text-align: left;
+            margin-bottom: 1vh;
+        }
+
+        .hotel-rating-container {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            bottom: 1.7vh;
+            position: absolute;
+        }
+
+        .restaurant-rating-container {
+            display: flex;
+            justify-content: left;
+            align-items: center;
+            bottom: 1vh;
+            position: absolute;
+        }
+
+        .rating-text {
+            color: #adadad;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1vw;
+            text-align: left;
+            margin-right: 0.5vh;
+        }
+
+        .rating-star {
+            height: 1.7vh;
+            position: relative;
+            translate: 0 -1px;
+        }
+
+        #restaurant-1 {
+            width: 100%;
+            height: 12.2vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            position: relative;
+            z-index: 3;
+            display: none;
+        }
+
+        #restaurant-2 {
+            width: 100%;
+            height: 12.2vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            position: relative;
+            z-index: 3;
+            display: none;
+        }
+
+        #restaurant-3 {
+            width: 100%;
+            height: 12.2vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            position: relative;
+            z-index: 3;
+            display: none;
+        }
+
+        #restaurant-4 {
+            width: 100%;
+            height: 12.2vh;
+            overflow: hidden;
+            background-color: #134857;
+            background-image: linear-gradient(#1B596A);
+            background-position: right;
+            background-size: 40vh;
+            background-repeat: no-repeat;
+            border-radius: 1vh;
+            position: relative;
+            z-index: 3;
+            display: none;
+        }
+
+        #restaurant-1:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        #restaurant-2:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        #restaurant-3:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        #restaurant-4:hover {
+            transform: scale(1.02);
+            outline: solid #FCD437 2px;
+        }
+
+        .restaurant-background {
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg,rgba(19, 72, 87, 1) 51%, rgba(0, 0, 0, 0) 70%);
+            padding: 0.7vh 2vh 1.7vh 2vh;
+            box-sizing: border-box;
+            position: relative;
+            cursor: pointer;
+            user-select: none;
+        }
+
+        .restaurant-name {
+            position: relative;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 1.5vw;
+            text-align: left;
+            max-width: 90%;
+            text-shadow: -1px -1px 1px #134857, 1px 1px 1px #134857, -1px 1px 1px #134857, 1px -1px 1px #134857;
+        }
+
+        .restaurant-menu-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 3vh;
+            overflow: hidden;
+            position: relative;
+            z-index: 1;
+        }
+
+        .restaurant-menu-container:last-child {
+            margin-bottom: 0;
+        }
+
+        .restaurant-menu {
+            background-color: #103E4B;
+            border-radius: 0 0 1vh 1vh;
+            width: 95%;
+            height: 100%;
+            position: relative;
+        }
+
+        #right:hover .restaurant-menu-container {
+            width: calc(100% + 1vh);
+        }
+
+        #restaurant-menu-1 {
+            padding: 1vh 2vh 2vh 2vh;
+            box-sizing: border-box;
+        }
+
+        #restaurant-menu-2 {
+            padding: 1vh 2vh 2vh 2vh;
+            box-sizing: border-box;
+        }
+
+        #restaurant-menu-3 {
+            padding: 1vh 2vh 2vh 2vh;
+            box-sizing: border-box;
+        }
+
+        #restaurant-menu-4 {
+            padding: 1vh 2vh 2vh 2vh;
+            box-sizing: border-box;
+        }
+
+        #restaurant-menu-container-1 {
+            transition: height 0.4s ease;
+            height: 0;
+            overflow: hidden
+        }
+        
+        #restaurant-menu-container-2 {
+            transition: height 0.4s ease;
+            height: 0;
+            overflow: hidden
+        }
+
+        #restaurant-menu-container-3 {
+            transition: height 0.4s ease;
+            height: 0;
+            overflow: hidden
+        }
+
+        #restaurant-menu-container-4 {
+            transition: height 0.4s ease;
+            height: 0;
+            overflow: hidden
+        }
+
+        .food-item {
+            width: 100%;
+            display: flex;
+            color: #fff;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1.4vh;
+            margin-bottom: 1vh;
+            position: relative;
+        }
+
+        .food-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .food-name {
+            max-width: 75%;
+        }
+
+        .food-item-amount-container {
+            right: 0vh;
+            position: absolute;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            height: 100%;
+        }
+
+        .food-item-amount {
+            height: 2vh;
+            width: 4vh;
+            position: relative;
+            overflow: hidden;
+            border: none;
+            padding: 0;
+            margin: 0 0 0;
+            color: #134857;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1.6vh;
+        }
+
+        .food-item-amount:focus {
+            outline: none;
+        }
+
+        .food-item-price-container {
+            right: 5vh;
+            position: absolute;
+            display: flex;
+            justify-content: right;
+            align-items: center;
+            height: 100%;
+        }
+
+        .food-item-price {
+            position: relative;
+            color: #fff;
+            font-family: "Roboto", sans-serif;
+            font-optical-sizing: auto;
+            font-weight: 500;
+            font-style: normal;
+            font-size: 1.6vh;
+        }
+
+        #hotel-loader {
+            background-color: #16576680;
+            border-radius: 1vh;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 3vw;
+            display: none;
+            user-select: none;
+            -moz-user-select: none;
+        }
+
+        #restaurant-loader {
+            background-color: #16576680;
+            border-radius: 1vh;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            display: flex;
+            color: #fff;
+            font-family: "Special Gothic Expanded One", sans-serif;
+            font-weight: 400;
+            font-style: normal;
+            font-size: 3vw;
+            display: none;
+            user-select: none;
+            -moz-user-select: none;
+        }
+
+        @keyframes Bounce1 {
+            0%   {translate: 0 0;}
+            50%  {translate: 0 -5px;}
+            100% {translate: 0 0;}
+        }
+
+        @keyframes Bounce2 {
+            10%   {translate: 0 0;}
+            60%  {translate: 0 -5px;}
+            110% {translate: 0 0;}
+        }
+
+        @keyframes Bounce3 {
+            20%   {translate: 0 0;}
+            70%  {translate: 0 -5px;}
+            120% {translate: 0 0;}
+        }
+
+        .hotel-loader-dot1 {
+            animation: Bounce1 0.8s ease-in-out infinite;
+        }
+
+        .hotel-loader-dot2 {
+            animation: Bounce2 0.8s ease-in-out infinite;
+        }
+
+        .hotel-loader-dot3 {
+            animation: Bounce3 0.8s ease-in-out infinite;
+        }
+
+    </style>
+</head>
+<body>
+    <img src="./Logo.png" id="logo">
+    <img src="./Bus.png" id="bus">
+    <div id="left">
+        <input id="country" placeholder="Ország">
+        <input id="city" placeholder="Város">
+        <input id="date" class="datepicker" />
+        <input id="kids" placeholder="Hány fő?">
+    </div>
+
+    <div id="middle">
+        <div id="hotel-loader">Betöltés<div class="hotel-loader-dot1">.</div><div class="hotel-loader-dot2">.</div><div class="hotel-loader-dot3">.</div></div>
+        <div id="hotel-1">
+            <div class="hotel-background">
+                <div id="hotel-name-1" class="hotel-name"></div>
+                <div id="hotel-desc-1" class="hotel-desc"></div>
+                <div class="hotel-rating-container">
+                    <div id="hotel-rating-1" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="HotelRatingGradientOne" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop1" offset="0%" stop-color="white" />
+                                <stop id="stop2" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#HotelRatingGradientOne)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="hotel-2">
+            <div class="hotel-background">
+                <div id="hotel-name-2" class="hotel-name"></div>
+                <div id="hotel-desc-2" class="hotel-desc"></div>
+                <div class="hotel-rating-container">
+                    <div id="hotel-rating-2" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="HotelRatingGradientTwo" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop3" offset="0%" stop-color="white" />
+                                <stop id="stop4" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#HotelRatingGradientTwo)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="hotel-3">
+            <div class="hotel-background">
+                <div id="hotel-name-3" class="hotel-name"></div>
+                <div id="hotel-desc-3" class="hotel-desc"></div>
+                <div class="hotel-rating-container">
+                    <div id="hotel-rating-3" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="HotelRatingGradientThree" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop5" offset="0%" stop-color="white" />
+                                <stop id="stop6" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#HotelRatingGradientThree)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="right">
+        <div id="restaurant-loader">Betöltés<div class="hotel-loader-dot1">.</div><div class="hotel-loader-dot2">.</div><div class="hotel-loader-dot3">.</div></div>
+        <div id="restaurant-1">
+            <div class="restaurant-background">
+                <div id="restaurant-name-1" class="restaurant-name"></div>
+                <div class="restaurant-rating-container">
+                    <div id="restaurant-rating-1" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="RestaurantRatingGradientOne" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop7" offset="0%" stop-color="white" />
+                                <stop id="stop8" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#RestaurantRatingGradientOne)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-menu-container-1" class="restaurant-menu-container">
+            <div class="restaurant-menu" id="restaurant-menu-1">
+                <div class="food-item">
+                    <div class="food-name" id="food-item-1"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-1-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-1-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-2"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-2-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-2-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-3"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-3-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-3-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-4"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-4-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-4-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-5"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-5-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-5-amount"></div>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-2">
+            <div class="restaurant-background">
+                <div id="restaurant-name-2" class="restaurant-name"></div>
+                <div class="restaurant-rating-container">
+                    <div id="restaurant-rating-2" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="RestaurantRatingGradientTwo" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop9" offset="0%" stop-color="white" />
+                                <stop id="stop10" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#RestaurantRatingGradientTwo)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-menu-container-2" class="restaurant-menu-container">
+            <div class="restaurant-menu" id="restaurant-menu-2">
+                <div class="food-item">
+                    <div class="food-name" id="food-item-6"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-6-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-6-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-7"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-7-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-7-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-8"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-8-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-8-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-9"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-9-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-9-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-10"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-10-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-10-amount"></div>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-3">
+            <div class="restaurant-background">
+                <div id="restaurant-name-3" class="restaurant-name"></div>
+                <div class="restaurant-rating-container">
+                    <div id="restaurant-rating-3" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="RestaurantRatingGradientThree" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop11" offset="0%" stop-color="white" />
+                                <stop id="stop12" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#RestaurantRatingGradientThree)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-menu-container-3" class="restaurant-menu-container">
+            <div class="restaurant-menu" id="restaurant-menu-3">
+                <div class="food-item">
+                    <div class="food-name" id="food-item-11"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-11-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-11-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-12"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-12-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-12-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-13"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-13-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-13-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-14"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-14-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-14-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-15"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-15-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-15-amount"></div>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-4">
+            <div class="restaurant-background">
+                <div id="restaurant-name-4" class="restaurant-name"></div>
+                <div class="restaurant-rating-container">
+                    <div id="restaurant-rating-4" class="rating-text"></div>
+                    <svg class="rating-star" xmlns="http://www.w3.org/2000/svg" viewBox="56.226 157.503 1010.32 184.993">
+                        <defs>
+                            <linearGradient id="RestaurantRatingGradientFour" x1="0%" y1="0%" x2="100%" y2="0%">
+                                <stop offset="0%" stop-color="white" />
+                                <stop id="stop13" offset="0%" stop-color="white" />
+                                <stop id="stop14" offset="0%" stop-color="#7a7a7a" />
+                                <stop offset="100%" stop-color="#7a7a7a" />
+                            </linearGradient>
+                        </defs>
+                        <path fill="url(#RestaurantRatingGradientFour)" d="M 129.985 226.673 L 56.226 228.165 L 115.015 272.405 L 93.652 342.496 L 154.207 300.669 L 214.762 342.496 L 193.399 272.405 L 252.188 228.165 L 
+                        178.429 226.673 L 154.207 157.504 Z M 333.574 226.672 L 259.815 228.164 L 318.604 272.404 L 297.241 342.495 L 357.796 300.668 L 418.351 342.495 L 396.988 
+                        272.404 L 455.777 228.164 L 382.018 226.672 L 357.796 157.503 Z M 537.163 226.672 L 463.404 228.164 L 522.193 272.404 L 500.83 342.495 L 561.385 300.668 L 
+                        621.94 342.495 L 600.577 272.404 L 659.366 228.164 L 585.607 226.672 L 561.385 157.503 Z M 740.753 226.673 L 666.994 228.165 L 725.783 272.405 L 704.42 342.496 L 
+                        764.975 300.669 L 825.53 342.496 L 804.167 272.405 L 862.956 228.165 L 789.197 226.673 L 764.975 157.504 Z M 944.343 226.673 L 870.584 228.165 L 929.373 272.405 
+                        L 908.01 342.496 L 968.565 300.669 L 1029.12 342.496 L 1007.757 272.405 L 1066.546 228.165 L 992.787 226.673 L 968.565 157.504 Z"/>
+                    </svg>
+                </div>
+            </div>
+        </div>
+        <div id="restaurant-menu-container-4" class="restaurant-menu-container">
+            <div class="restaurant-menu" id="restaurant-menu-4">
+                <div class="food-item">
+                    <div class="food-name" id="food-item-16"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-16-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-16-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-17"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-17-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-17-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-18"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-18-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-18-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-19"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-19-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-19-amount"></div>
+                </div>
+                <div class="food-item">
+                    <div class="food-name" id="food-item-20"></div>
+                    <div class="food-item-price-container"><div class="food-item-price" id="food-item-20-price"></div></div>
+                    <div class="food-item-amount-container"><input placeholder="0" type="number" min="0" max="99" class="food-item-amount" id="food-item-20-amount"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="final-price">
+        <div id="price"></div>
+        <div id="fullscreen-icon"></div>
+    </div>
+
+    <script>
+        const countryInput = document.getElementById('country');
+        const cityInput = document.getElementById('city');
+        const hotelElement = document.getElementById('hotel-1');
+        const HotelLoader = document.getElementById('hotel-loader');
+        const RestaurantLoader = document.getElementById('restaurant-loader');
+        const restaurantElement = document.getElementById('restaurant-1');
+
+        new window.Dates("datepicker", {
+        minYear: 2000,
+        selectionType: "range",
+        }).mount();
+
+        document.addEventListener('DOMContentLoaded', function () {
+            function checkConditionsAndShowLoader() {
+                const countryHasValue = countryInput.value.trim() !== '';
+                const cityHasValue = cityInput.value.trim() !== '';
+                const countryNotFocused = document.activeElement !== countryInput;
+                const cityNotFocused = document.activeElement !== cityInput;
+                const hotelIsHidden = window.getComputedStyle(hotelElement).display === 'none';
+
+                if (countryHasValue && cityHasValue && countryNotFocused && cityNotFocused && hotelIsHidden) {
+                    HotelLoader.style.display = 'flex';
+                }
+            }
+
+            countryInput.addEventListener('blur', checkConditionsAndShowLoader);
+            cityInput.addEventListener('blur', checkConditionsAndShowLoader);
+        });
+        
+        function sendCountryToPython() {
+            const country = document.getElementById('country').value;
+
+            pywebview.api.set_country_data(country);
+        }
+
+        function sendCityToPython() {
+            const city = document.getElementById('city').value;
+
+            pywebview.api.set_city_data(city);
+        }
+
+        function sendDateToPython() {
+            const date = document.getElementById('date').value;
+
+            pywebview.api.set_date_data(date);
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            let countryFocused = false;
+            let cityFocused = false;
+            let timeoutId = null;
+
+            function areInputsValid() {
+                const countryVal = countryInput.value.trim();
+                const cityVal = cityInput.value.trim();
+                return countryVal !== "" && cityVal !== "" && !countryFocused && !cityFocused;
+            }
+
+            function checkInputs() {
+                if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+                }
+
+                if (areInputsValid()) {
+                timeoutId = setTimeout(() => {
+                    if (areInputsValid()) {
+                    showHostelInfo();
+                    }
+                }, 500);
+                }
+            }
+
+            function handleFocusBlurEvents(input, setFocusFlag) {
+                input.addEventListener('focus', function () {
+                setFocusFlag(true);
+                if (timeoutId) {
+                    clearTimeout(timeoutId);
+                    timeoutId = null;
+                }
+                });
+
+                input.addEventListener('blur', function () {
+                setFocusFlag(false);
+                setTimeout(checkInputs, 0);
+                });
+
+                input.addEventListener('input', checkInputs);
+            }
+
+            handleFocusBlurEvents(countryInput, value => countryFocused = value);
+            handleFocusBlurEvents(cityInput, value => cityFocused = value);
+        });
+
+        let currentHotelIndex = null;
+        let restaurantMenuTimers = [null, null, null, null];
+        let restaurantMenusCached = [{}, {}, {}, {}];
+
+        function populateRestaurantMenuUI(restaurantIndex, menuItems) {
+            for (let i = 0; i < 5; i++) {
+                document.getElementById(`food-item-${restaurantIndex*5 + i + 1}`).textContent = menuItems[i]?.name || "";
+                document.getElementById(`food-item-${restaurantIndex*5 + i + 1}-price`).textContent = menuItems[i]?.price || "";
+            }
+        }
+
+        for (let i = 1; i <= 3; i++) {
+            document.getElementById(`hotel-${i}`).addEventListener("click", async function() {
+                currentHotelIndex = i-1;
+                let restaurants = await window.pywebview.api.get_restaurants_for_hostel(currentHotelIndex);
+                for (let r = 0; r < 4; r++) {
+                    document.getElementById(`restaurant-name-${r+1}`).textContent = restaurants[r]?.name || "Nincs ilyen étterem";
+                    document.getElementById(`restaurant-rating-${r+1}`).textContent = restaurants[r]?.rating || "";
+                    document.getElementById(`restaurant-${r+1}`).style.backgroundImage =
+                        restaurants[r]?.photo_url && restaurants[r].photo_url !== "" ? `url('${restaurants[r].photo_url}')` : "linear-gradient(#1B596A)";
+                    for (let m = 0; m < 5; m++) {
+                        document.getElementById(`food-item-${r*5 + m + 1}`).textContent = "";
+                        document.getElementById(`food-item-${r*5 + m + 1}-price`).textContent = "";
+                    }
+
+                    clearTimeout(restaurantMenuTimers[r]);
+                    restaurantMenuTimers[r] = setTimeout(async () => {
+                        if (currentHotelIndex === i-1) {
+                            if (!restaurantMenusCached[r][currentHotelIndex]) {
+                                let menu = await window.pywebview.api.get_restaurant_menu_js(r, currentHotelIndex);
+                                restaurantMenusCached[r][currentHotelIndex] = menu;
+                            }
+                            populateRestaurantMenuUI(r, restaurantMenusCached[r][currentHotelIndex]);
+                        }
+                    }, 3000);
+                }
+                updateRestaurantRating(restaurants[0]?.rating, restaurants[1]?.rating, restaurants[2]?.rating, restaurants[3]?.rating)
+                document.getElementById('restaurant-1').style.display = "block";
+                document.getElementById('restaurant-2').style.display = "block";
+                document.getElementById('restaurant-3').style.display = "block";
+                document.getElementById('restaurant-4').style.display = "block";
+                RestaurantLoader.style.display = "none";
+            });
+        }
+
+        for (let r = 0; r < 4; r++) {
+            document.getElementById(`restaurant-${r+1}`).addEventListener("click", async function() {
+                clearTimeout(restaurantMenuTimers[r]);
+                if (!restaurantMenusCached[r][currentHotelIndex]) {
+                    let menu = await window.pywebview.api.get_restaurant_menu_js(r, currentHotelIndex);
+                    restaurantMenusCached[r][currentHotelIndex] = menu;
+                }
+                populateRestaurantMenuUI(r, restaurantMenusCached[r][currentHotelIndex]);
+            });
+        }
+
+        async function showHostelInfo() {
+            let info = await window.pywebview.api.get_hostel_info();
+            for (let i = 0; i < 3; i++) {
+                document.getElementById(`hotel-name-${i+1}`).textContent = info.names[i] || "Nincs ilyen hotel";
+                document.getElementById(`hotel-rating-${i+1}`).textContent = info.ratings[i] || "";
+                document.getElementById(`hotel-${i+1}`).style.backgroundImage = info.photo_urls[i] ? `url('${info.photo_urls[i]}')` : "linear-gradient(#1B596A)";
+                document.getElementById(`hotel-desc-${i+1}`).textContent = info.prices[i] ? `${info.prices[i]} / Fő / Éj` : "";
+            }
+            updateHotelRating(info.ratings[0], info.ratings[1], info.ratings[2])
+            document.getElementById('hotel-1').style.display = "block";
+            document.getElementById('hotel-2').style.display = "block";
+            document.getElementById('hotel-3').style.display = "block";
+            HotelLoader.style.display = "none";
+        }
+
+        document.getElementById('country').addEventListener('blur', sendCountryToPython);
+        document.getElementById('city').addEventListener('blur', sendCityToPython);
+        document.addEventListener('focusout', function (e) {
+          const calendarEl = document.querySelector('.dates--calendar');
+          if (calendarEl && calendarEl.contains(e.target)) {
+            setTimeout(() => {
+              sendDateToPython();
+              calculateAndShowFinalPrice();
+            }, 50);
+          }
+        });
+
+        window.addEventListener("DOMContentLoaded", function () {
+            const dateElement = document.getElementById("date");
+            if (dateElement) {
+            dateElement.focus();
+            }
+        });
+
+        function ClearInputs() {
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            numberInputs.forEach(input => {
+                input.value = '';
+            });
+            RestaurantMenuOne.style.height = "0";
+            RestaurantMenuTwo.style.height = "0";
+            RestaurantMenuThree.style.height = "0";
+            RestaurantMenuFour.style.height = "0";
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+            const hotelIds = ['hotel-1', 'hotel-2', 'hotel-3'];
+            ClearInputs()
+
+            hotelIds.forEach(hotelId => {
+                const hotelElement = document.getElementById(hotelId);
+                if (hotelElement) {
+                    hotelElement.addEventListener('click', function () {
+                        const restaurantDisplay = window.getComputedStyle(restaurantElement).display;
+                        if (restaurantDisplay === 'none') {
+                            RestaurantLoader.style.display = 'flex';
+                        }
+                    });
+                }
+            });
+
+            hotelIds.forEach(id => {
+                const element = document.getElementById(id);
+                element.addEventListener('click', ClearInputs);
+            });
+
+        });
+
+        let selectedHotelIndex = null;
+
+        function calculateAndShowFinalPrice() {
+            const kidsInput = document.getElementById("kids");
+            const dateInput = document.getElementById("date");
+            const finalPriceElement = document.getElementById("price");
+
+            const kidsValue = parseInt(kidsInput.value);
+            if (isNaN(kidsValue) || kidsValue <= 0 || selectedHotelIndex === null) {
+                finalPriceElement.textContent = "";
+                return;
+            }
+
+            const hotelDesc = document.getElementById(`hotel-desc-${selectedHotelIndex + 1}`);
+            const priceMatch = hotelDesc?.textContent.match(/(\d+)\s*Ft/);
+            if (!priceMatch) {
+                finalPriceElement.textContent = "Nem található ár.";
+                return;
+            }
+
+            const pricePerKid = parseInt(priceMatch[1]);
+            let tripLength = 1;
+            let includeTripLength = false;
+
+            const dateValue = dateInput.value.trim();
+            if (dateValue.includes(" - ")) {
+                const [startStr, endStr] = dateValue.split(" - ");
+                const startDate = new Date(startStr);
+                const endDate = new Date(endStr);
+
+                if (!isNaN(startDate.getTime()) && !isNaN(endDate.getTime())) {
+                    const diff = endDate - startDate;
+                    const days = Math.ceil(diff / (1000 * 60 * 60 * 24));
+                    if (days > 0) {
+                        tripLength = days;
+                        includeTripLength = true;
+                    }
+                }
+            }
+
+            let totalPrice = pricePerKid * kidsValue * tripLength;
+            let priceParts = [];
+
+            if (includeTripLength) {
+                priceParts.push(`${pricePerKid}Ft · ${kidsValue} Fő · ${tripLength} Éj`);
+            } else {
+                priceParts.push(`${pricePerKid}Ft · ${kidsValue} Fő`);
+            }
+
+            for (let i = 1; i <= 20; i++) {
+                const foodInput = document.getElementById(`food-item-${i}-amount`);
+                const foodPriceDiv = document.getElementById(`food-item-${i}-price`);
+
+                if (!foodInput || !foodPriceDiv) continue;
+
+                const quantity = parseInt(foodInput.value);
+                if (isNaN(quantity) || quantity <= 0) continue;
+
+                const foodPriceMatch = foodPriceDiv.textContent.match(/(\d+)\s*Ft/);
+                if (!foodPriceMatch) continue;
+
+                const foodPrice = parseInt(foodPriceMatch[1]);
+                const foodTotal = foodPrice * quantity;
+                totalPrice += foodTotal;
+                priceParts.push(`${foodPrice}Ft · ${quantity}`);
+            }
+
+            finalPriceElement.textContent = priceParts.join(" + ") + ` = ${totalPrice}Ft`;
+        }
+
+        document.addEventListener("DOMContentLoaded", function () {
+            const kidsInput = document.getElementById("kids");
+            const dateInput = document.getElementById("date");
+
+            if (kidsInput) kidsInput.addEventListener("input", calculateAndShowFinalPrice);
+            if (dateInput) dateInput.addEventListener("input", calculateAndShowFinalPrice);
+
+            for (let i = 1; i <= 20; i++) {
+                const foodInput = document.getElementById(`food-item-${i}-amount`);
+                if (foodInput) {
+                    foodInput.addEventListener("input", calculateAndShowFinalPrice);
+                }
+            }
+
+            for (let i = 1; i <= 3; i++) {
+                const hotel = document.getElementById(`hotel-${i}`);
+                if (hotel) {
+                    hotel.addEventListener("click", () => {
+                        selectedHotelIndex = i - 1;
+                        calculateAndShowFinalPrice();
+                    });
+                }
+            }
+        });
+
+        function updateHotelRating(HotelRatingOne, HotelRatingTwo, HotelRatingThree) {
+            const HotelRatingPercentOne = (HotelRatingOne / 5) * 100;
+            const HotelRatingPercentTwo = (HotelRatingTwo / 5) * 100;
+            const HotelRatingPercentThree = (HotelRatingThree / 5) * 100;
+            stop1.setAttribute('offset', `${HotelRatingPercentOne}%`);
+            stop2.setAttribute('offset', `${HotelRatingPercentOne}%`);
+            stop3.setAttribute('offset', `${HotelRatingPercentTwo}%`);
+            stop4.setAttribute('offset', `${HotelRatingPercentTwo}%`);
+            stop5.setAttribute('offset', `${HotelRatingPercentThree}%`);
+            stop6.setAttribute('offset', `${HotelRatingPercentThree}%`);
+        }
+
+        function updateRestaurantRating(RestaurantRatingOne, RestaurantRatingTwo, RestaurantRatingThree, RestaurantRatingFour) {
+            const RestaurantRatingPercentOne = (RestaurantRatingOne / 5) * 100;
+            const RestaurantRatingPercentTwo = (RestaurantRatingTwo / 5) * 100;
+            const RestaurantRatingPercentThree = (RestaurantRatingThree / 5) * 100;
+            const RestaurantRatingPercentFour = (RestaurantRatingFour / 5) * 100;
+            stop7.setAttribute('offset', `${RestaurantRatingPercentOne}%`);
+            stop8.setAttribute('offset', `${RestaurantRatingPercentOne}%`);
+            stop9.setAttribute('offset', `${RestaurantRatingPercentTwo}%`);
+            stop10.setAttribute('offset', `${RestaurantRatingPercentTwo}%`);
+            stop11.setAttribute('offset', `${RestaurantRatingPercentThree}%`);
+            stop12.setAttribute('offset', `${RestaurantRatingPercentThree}%`);
+            stop13.setAttribute('offset', `${RestaurantRatingPercentFour}%`);
+            stop14.setAttribute('offset', `${RestaurantRatingPercentFour}%`);
+        }
+
+        const RestaurantOne = document.getElementById("restaurant-1");
+        const RestaurantMenuOne = document.getElementById("restaurant-menu-container-1");
+        const RestaurantTwo = document.getElementById("restaurant-2");
+        const RestaurantMenuTwo = document.getElementById("restaurant-menu-container-2");
+        const RestaurantThree = document.getElementById("restaurant-3");
+        const RestaurantMenuThree = document.getElementById("restaurant-menu-container-3");
+        const RestaurantFour = document.getElementById("restaurant-4");
+        const RestaurantMenuFour = document.getElementById("restaurant-menu-container-4");
+
+        let MenuOneOpen = false;
+        let MenuTwoOpen = false;
+        let MenuThreeOpen = false;
+        let MenuFourOpen = false;
+
+        RestaurantOne.addEventListener("click", () => {
+            if (!MenuOneOpen) {
+            RestaurantMenuOne.style.height = RestaurantMenuOne.scrollHeight + "px";
+
+            RestaurantMenuOne.addEventListener("transitionend", function handler() {
+                RestaurantMenuOne.style.height = "auto";
+                RestaurantMenuOne.removeEventListener("transitionend", handler);
+            });
+            } else {
+            RestaurantMenuOne.style.height = RestaurantMenuOne.scrollHeight + "px";
+
+            void RestaurantMenuOne.offsetHeight;
+
+            RestaurantMenuOne.style.height = "0";
+            }
+
+            MenuOneOpen = !MenuOneOpen;
+        });
+
+        RestaurantTwo.addEventListener("click", () => {
+            if (!MenuTwoOpen) {
+            RestaurantMenuTwo.style.height = RestaurantMenuTwo.scrollHeight + "px";
+
+            RestaurantMenuTwo.addEventListener("transitionend", function handler() {
+                RestaurantMenuTwo.style.height = "auto";
+                RestaurantMenuTwo.removeEventListener("transitionend", handler);
+            });
+            } else {
+            RestaurantMenuTwo.style.height = RestaurantMenuTwo.scrollHeight + "px";
+
+            void RestaurantMenuTwo.offsetHeight;
+
+            RestaurantMenuTwo.style.height = "0";
+            }
+
+            MenuTwoOpen = !MenuTwoOpen;
+        });
+
+        RestaurantThree.addEventListener("click", () => {
+            if (!MenuThreeOpen) {
+            RestaurantMenuThree.style.height = RestaurantMenuThree.scrollHeight + "px";
+
+            RestaurantMenuThree.addEventListener("transitionend", function handler() {
+                RestaurantMenuThree.style.height = "auto";
+                RestaurantMenuThree.removeEventListener("transitionend", handler);
+            });
+            } else {
+            RestaurantMenuThree.style.height = RestaurantMenuThree.scrollHeight + "px";
+
+            void RestaurantMenuThree.offsetHeight;
+
+            RestaurantMenuThree.style.height = "0";
+            }
+
+            MenuThreeOpen = !MenuThreeOpen;
+        });
+
+        RestaurantFour.addEventListener("click", () => {
+            if (!MenuFourOpen) {
+            RestaurantMenuFour.style.height = RestaurantMenuFour.scrollHeight + "px";
+
+            RestaurantMenuFour.addEventListener("transitionend", function handler() {
+                RestaurantMenuFour.style.height = "auto";
+                RestaurantMenuFour.removeEventListener("transitionend", handler);
+            });
+            } else {
+            RestaurantMenuFour.style.height = RestaurantMenuFour.scrollHeight + "px";
+
+            void RestaurantMenuFour.offsetHeight;
+
+            RestaurantMenuFour.style.height = "0";
+            }
+
+            MenuFourOpen = !MenuFourOpen;
+        });
+
+        const finalPrice = document.getElementById('final-price');
+        const Price = document.getElementById('price');
+        const fullscreenIcon = document.getElementById('fullscreen-icon');
+        let isExpanded = false;
+
+        finalPrice.addEventListener('click', () => {
+            if (isExpanded) {
+            finalPrice.style.height = "";
+            fullscreenIcon.style.transform = "rotate(0deg)";
+            finalPrice.style.padding = "";
+            finalPrice.style.alignItems = "";
+            Price.style.alignItems = "";
+            Price.style.display = "block";
+            Price.style.height = "";
+            Price.style.whiteSpace = "";
+            finalPrice.style.boxShadow = "0px -5px 5px #00000000"
+            } else {
+            finalPrice.style.height = "11vh";
+            fullscreenIcon.style.transform = "rotate(-180deg)";
+            finalPrice.style.padding = "1vh 2vh 1vh 2vh";
+            finalPrice.style.alignItems = "normal";
+            Price.style.alignItems = "normal";
+            Price.style.display = "flex";
+            Price.style.height = "100%";
+            Price.style.whiteSpace = "break-spaces";
+            finalPrice.style.boxShadow = "0px -5px 5px #00000010"
+            }
+            isExpanded = !isExpanded;
+        });
+    </script>
+</body>
+</html>
